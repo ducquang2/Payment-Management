@@ -334,7 +334,7 @@ public final class App {
             System.out.println(Integer.toString(i + 1) + ". Khoan no: "
                     + Integer.toString(khoanNo.getTienNo()) + " | Thang tra: "
                     + Integer.toString(khoanNo.getNgayTraNo().getMonth()) + "/"
-                    + Integer.toString(khoanNo.getNgayTraNo().getMonth())
+                    + Integer.toString(khoanNo.getNgayTraNo().getYear())
                     + (khoanNo.getDaTra() ? " | Da tra" : ""));
         }
     }
@@ -346,7 +346,7 @@ public final class App {
             System.out.println(Integer.toString(i + 1) + ". Khoan no: "
                     + Integer.toString(soNganHang.getSoTienGui()) + " | Thang tra: "
                     + Integer.toString(soNganHang.getNgayTra().getMonth()) + "/"
-                    + Integer.toString(soNganHang.getNgayTra().getMonth()));
+                    + Integer.toString(soNganHang.getNgayTra().getYear()));
         }
     }
 
