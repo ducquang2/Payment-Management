@@ -54,6 +54,18 @@ public final class App {
                 break;
             }
             thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + nganHang.getLais(today));
+            // Workaround
+            for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
+                if (today.isEqual(nganHang.getKhoanGui().get(i).getNgayTra())) {
+                    thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + nganHang.getLais(today)); // Minus the months that have been gained
+                }
+            }
+            // Setup
+            for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
+                if (today.isEqual(nganHang.getKhoanGui().get(i).getNgayTra())) {
+                    nganHang.getKhoanGui().get(i).setDaNhanLai(true);
+                }
+            }
             clrscr();
             menu.showStatus(thuNhap, chiPhi, nganHang, khoanNos, today);
             int choose = menu.createMenu(scanner);
@@ -121,6 +133,7 @@ public final class App {
                         if (!(check[1] || check[3])) {
                             System.out.println("Ban chua nhan luong.");
                         } else {
+                            excel.writeExcelLaiNoHangThang(book, excelPath, khoanNos, today);
                             today.plusMonths(1);
                             for (int i = 1; i < 5; ++i) {
                                 check[i] = false;
@@ -131,7 +144,6 @@ public final class App {
                             thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + thuNhap.getLuongVoChong());
                             thuNhap.setLuongVoChong(0);
                             thuNhap.setLuongChung(0);
-                            excel.writeExcelLaiNoHangThang(book, excelPath, khoanNos, today);
                         }
                     } else {
                         System.out.println("Ban chua tra chi phi hoac no.");
@@ -200,7 +212,7 @@ public final class App {
         // int laiNoChung = khoanNo1.getLai(today) + khoanno2.getLai(today);
         int laiNoChung = 0;
         for (int i = 0; i < khoanNos.size(); ++i) {
-            if (khoanNos.get(i).linhHoat) {
+            if ((khoanNos.get(i).linhHoat) && (khoanNos.get(i).toiThoiDiem(today))) {
                 khoanNos.get(i).inputLai(scanner);
             }
             laiNoChung += khoanNos.get(i).getLai(today);

@@ -37,7 +37,7 @@ public class KhoanNo implements Comparable<KhoanNo> {
     }
 
     public int getLai(Date date) {
-        if (ngayTraNo.diffMonths(date) % chuKy != 0) {
+        if (!toiThoiDiem(date)) {
             return 0;
         }
         return (int) (soTienNo / 100 * phanTramLai);
@@ -109,5 +109,9 @@ public class KhoanNo implements Comparable<KhoanNo> {
             return -1;
         }
         return 1;
+    }
+
+    public boolean toiThoiDiem(Date today) {
+        return (ngayTraNo.diffMonths(today) % chuKy == 0);
     }
 }
