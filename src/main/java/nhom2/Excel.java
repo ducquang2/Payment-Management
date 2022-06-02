@@ -249,6 +249,11 @@ public class Excel {
             } else {
                 cell.setCellValue("Cố định");
             }
+
+            cell = row.createCell(5);
+            if (!khoanNo.getLinhHoat()) {
+                cell.setCellValue(khoanNo.getPhanTramLai());
+            }
             ++this.rowCacKhoanNo;
         }
 
@@ -386,6 +391,10 @@ public class Excel {
             cell = row.createCell(4);
             cell.setCellStyle(cellStyle);
             cell.setCellValue("Linh hoạt");
+
+            cell = row.createCell(5);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("Phần trăm lãi");
         }
     }
 

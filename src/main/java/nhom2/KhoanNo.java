@@ -55,6 +55,10 @@ public class KhoanNo implements Comparable<KhoanNo> {
         return this.chuKy;
     }
 
+    public double getPhanTramLai() {
+        return this.phanTramLai;
+    }
+
     public void setDaTra(boolean daTra) {
         this.daTra = daTra;
     }
