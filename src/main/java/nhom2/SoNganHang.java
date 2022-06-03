@@ -7,7 +7,6 @@ public class SoNganHang {
     protected Date ngayGui = new Date();
     protected Date ngayTra = new Date();
     protected double phanTramLai = 0;
-    protected boolean daNhanLai = false;
 
     public SoNganHang() {
 
@@ -56,14 +55,6 @@ public class SoNganHang {
 
     public int getLai() {
         return (int) (this.getSoTienGui() / 100 * this.getPhanTramLai() + this.getSoTienGui());
-    }
-
-    public boolean getDaNhanLai() {
-        return daNhanLai;
-    }
-
-    public void setDaNhanLai(boolean daNhanLai) {
-        this.daNhanLai = daNhanLai;
     }
 
     public void input(Scanner scanner, ThuNhap thuNhap, Date today) {

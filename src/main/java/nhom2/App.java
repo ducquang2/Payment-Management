@@ -49,22 +49,16 @@ public final class App {
         boolean isExit = false;
         today.plusMonths(1);
         do {
-            if (!traTienNo(thuNhap, khoanNos, today)) {
-                thongBaoVoNo();
-                break;
-            }
-            thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + nganHang.getLais(today));
-            // Workaround
-            for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
-                if (today.isEqual(nganHang.getKhoanGui().get(i).getNgayTra())) {
-                    thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + nganHang.getLais(today)); // Minus the months that have been gained
+            if (!check[5]) {
+                if (!traTienNo(thuNhap, khoanNos, today)) {
+                    thongBaoVoNo();
+                    break;
                 }
+                check[5] = true;
             }
-            // Setup
-            for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
-                if (today.isEqual(nganHang.getKhoanGui().get(i).getNgayTra())) {
-                    nganHang.getKhoanGui().get(i).setDaNhanLai(true);
-                }
+            if (!check[0]) {
+                thuNhap.setThuNhapTraNo(thuNhap.getThuNhapTraNo() + nganHang.getLais(today));
+                check[0] = true;
             }
             clrscr();
             menu.showStatus(thuNhap, chiPhi, nganHang, khoanNos, today);
@@ -135,7 +129,7 @@ public final class App {
                         } else {
                             excel.writeExcelLaiNoHangThang(book, excelPath, khoanNos, today);
                             today.plusMonths(1);
-                            for (int i = 1; i < 5; ++i) {
+                            for (int i = 0; i < 6; ++i) {
                                 check[i] = false;
                             }
 
@@ -201,6 +195,7 @@ public final class App {
         chiPhi = Math.max(chiPhi - temp, 0);
 
         if (chiPhi != 0) {
+            System.out.println("So tien am: " + Integer.toString(-chiPhi));
             return false;
         }
 
@@ -213,6 +208,7 @@ public final class App {
         int laiNoChung = 0;
         for (int i = 0; i < khoanNos.size(); ++i) {
             if ((khoanNos.get(i).linhHoat) && (khoanNos.get(i).toiThoiDiem(today))) {
+                
                 khoanNos.get(i).inputLai(scanner);
             }
             laiNoChung += khoanNos.get(i).getLai(today);
@@ -236,6 +232,7 @@ public final class App {
         laiNoChung = Math.max(laiNoChung - temp, 0);
 
         if (laiNoChung != 0) {
+            System.out.println("So tien am: " + Integer.toString(-laiNoChung));
             return false;
         }
 
@@ -287,6 +284,7 @@ public final class App {
                 tienNo = Math.max(tienNo - temp, 0);
 
                 if (tienNo != 0) {
+                    System.out.println("So tien am: " + Integer.toString(-tienNo));
                     return false;
                 } else {
                     // khoanNos.remove(i);
