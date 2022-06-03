@@ -112,6 +112,6 @@ public class KhoanNo implements Comparable<KhoanNo> {
     }
 
     public boolean toiThoiDiem(Date today) {
-        return ((ngayTraNo.diffMonths(today) % chuKy == 0) && (today.isGreater(ngayTraNo)));
+        return ((ngayTraNo.diffMonths(today) % chuKy == 0) && ((ngayTraNo.isGreater(today)) || ngayTraNo.isEqual(today)));
     }
 }
