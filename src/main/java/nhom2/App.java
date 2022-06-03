@@ -353,7 +353,7 @@ public final class App {
         System.out.println("Cac so ngan hang: ");
         for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
             SoNganHang soNganHang = nganHang.getKhoanGui().get(i);
-            System.out.println(Integer.toString(i + 1) + ". Khoan no: "
+            System.out.println(Integer.toString(i + 1) + ". So ngan hang: "
                     + Integer.toString(soNganHang.getSoTienGui()) + " | Thang tra: "
                     + Integer.toString(soNganHang.getNgayTra().getMonth()) + "/"
                     + Integer.toString(soNganHang.getNgayTra().getYear()));
