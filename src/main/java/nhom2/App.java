@@ -34,7 +34,9 @@ public final class App {
         // Create excel file
         String excelPath = "./OutPut.xlsx";
         Excel excel = new Excel();
-        Workbook book = excel.createExcel(excelPath);
+        Workbook book = excel.getWorkbook(excelPath);
+
+        clrscr();
 
         inputKhoanNo(scanner, khoanNos, today);
 

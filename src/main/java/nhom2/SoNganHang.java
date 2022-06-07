@@ -7,15 +7,18 @@ public class SoNganHang {
     protected Date ngayGui = new Date();
     protected Date ngayTra = new Date();
     protected double phanTramLai = 0;
+    int chuKy = 0;
 
     public SoNganHang() {
 
     }
 
-    public SoNganHang(int soTienGui, Date ngayGui, Date ngayTra) {
+    public SoNganHang(int soTienGui, Date ngayGui, Date ngayTra, double phanTramLai, int chuKy) {
         this.soTienGui = soTienGui;
         this.ngayGui = ngayGui;
         this.ngayTra = ngayTra;
+        this.phanTramLai = phanTramLai;
+        this.chuKy = chuKy;
     }
 
     public SoNganHang(SoNganHang SoMoi) {
@@ -23,6 +26,7 @@ public class SoNganHang {
         this.ngayGui = SoMoi.ngayGui;
         this.ngayTra = SoMoi.ngayTra;
         this.phanTramLai = SoMoi.phanTramLai;
+        this.chuKy = SoMoi.chuKy;
     }
 
     public int getSoTienGui() {
@@ -53,8 +57,28 @@ public class SoNganHang {
         return ngayTra;
     }
 
+    public void setNgayTra(Date ngayTra) {
+        this.ngayTra = ngayTra;
+    }
+
+    public int getChuKy() {
+        return chuKy;
+    }
+
+    public void setChuKy(int chuKy) {
+        this.chuKy = chuKy;
+    }
+
+    // public boolean toiThoiDiem(Date today) {
+    //     return ((ngayTra.diffMonths(today) % chuKy == 0) && ((ngayTra.isGreater(today)) || ngayTra.isEqual(today)));
+    // }
+
     public int getLai() {
-        return (int) (this.getSoTienGui() / 100 * this.getPhanTramLai() + this.getSoTienGui());
+        // if (!toiThoiDiem(today)) {
+        //     return 0;
+        // }
+        return (int) (Math.pow(phanTramLai, ngayTra.diffMonths(ngayGui) / chuKy) + 1 * this.soTienGui);
+        // return (int) (this.getSoTienGui() / 100 * this.getPhanTramLai());
     }
 
     public void input(Scanner scanner, ThuNhap thuNhap, Date today) {
@@ -71,12 +95,16 @@ public class SoNganHang {
                 System.out.println("So tien khong hop le !");
             }
         } while (loop);
-
         this.setSoTienGui(temp);
         thuNhap.setLuongVoChong(thuNhap.getLuongVoChong() - temp);
-        System.out.print("Nhap chu ky gui (thang): ");
-        temp = scanner.nextInt();
-        this.ngayTra.plusMonths(temp);
+
+        System.out.println("Nhap ngay nhan: ");
+        this.ngayTra.input(scanner);
+        do {
+            System.out.print("Nhap chu ky (thang): ");
+            this.chuKy = scanner.nextInt();
+        } while (ngayTra.diffMonths(ngayGui) < chuKy);
+
         System.out.print("Nhap phan tram lai (?%): ");
         this.phanTramLai = scanner.nextDouble();
     }

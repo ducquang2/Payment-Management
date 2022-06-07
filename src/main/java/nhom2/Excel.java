@@ -3,10 +3,15 @@ package nhom2;
 import java.util.Vector;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.ImReal;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -31,13 +36,32 @@ public class Excel {
 
     }
 
+    public Workbook readExcel(String excelFilePath) throws IOException {
+        Workbook workbook = checkWorkBook(excelFilePath);
+
+        Sheet sheet = workbook.getSheetAt(0);
+        this.rowLuong = sheet.getLastRowNum();
+
+        sheet = workbook.getSheetAt(1);
+        this.rowChiPhi = sheet.getLastRowNum();
+
+        sheet = workbook.getSheetAt(2);
+        this.rowNganHang = sheet.getLastRowNum();
+
+        sheet = workbook.getSheetAt(3);
+        this.rowNoHangThang = sheet.getLastRowNum();
+
+        sheet = workbook.getSheetAt(4);
+        this.rowNoHangThang = sheet.getLastRowNum();
+
+        createOutputFile(workbook, excelFilePath);
+
+        return workbook;
+    }
+
     public Workbook createExcel(String excelFilePath) throws IOException {
-        // File xlsxFile = new File(excelFilePath);
-
-        // FileInputStream inputStream = new FileInputStream(xlsxFile);
-
         // Get Workbook
-        Workbook workbook = getWorkbook(excelFilePath);
+        Workbook workbook = checkWorkBook(excelFilePath);
 
         // Create sheet
         Sheet sheetLuong = workbook.createSheet("Luong"); // Create sheet with sheet name
@@ -46,23 +70,14 @@ public class Excel {
         Sheet sheetNoLinhHoat = workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
         Sheet sheetCacKhoanNo = workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
 
-        // writeHeader(sheetChiphi, rowChiPhi);
-        // writeHeader(sheetNganHang, rowNganHang);
-        // writeHeader(sheetNo, rowNo);
-
         createOutputFile(workbook, excelFilePath);
-        // workbook.close();
+
         return workbook;
     }
 
     public void writeExcelThuNhap(Workbook workbook, String excelFilePath, ThuNhap thuNhap, Date today)
             throws IOException {
-        // Workbook workbook = getWorkbook(excelFilePath);
-
-        // Sheet sheet = workbook.createSheet("Luong"); // Create sheet with sheet name
         // Get sheet
-        // System.out.println(workbook.getNumberOfSheets());
-
         Sheet sheet = workbook.getSheet("Luong");
 
         Row row = sheet.createRow(this.rowLuong);
@@ -87,24 +102,16 @@ public class Excel {
         cell = row.createCell(4);
         cell.setCellValue(thuNhap.getThuNhapTraNo());
 
-        // Write footer
-        // writeFooter(sheet, rowIndex);
-
         // Auto resize column witdth
         int numberOfColumn = sheet.getRow(0).getPhysicalNumberOfCells();
         autosizeColumn(sheet, numberOfColumn);
 
-        // Create file excel
         createOutputFile(workbook, excelFilePath);
         ++this.rowLuong;
-        // System.out.println("Done!!!");
     }
 
     public void writeExcelChiPhi(Workbook workbook, String excelFilePath, ChiPhi chiPhi, Date today)
             throws IOException {
-        // Get sheet
-        // Workbook workbook = getWorkbook(excelFilePath);
-
         Sheet sheet = workbook.getSheet("Chi Phi");
 
         Row row = sheet.createRow(this.rowChiPhi);
@@ -133,7 +140,6 @@ public class Excel {
         int numberOfColumn = sheet.getRow(0).getPhysicalNumberOfCells();
         autosizeColumn(sheet, numberOfColumn);
 
-        // Create file excel
         createOutputFile(workbook, excelFilePath);
         ++this.rowChiPhi;
     }
@@ -171,9 +177,12 @@ public class Excel {
             cell.setCellValue(soNganHang.getNgayTra().toString());
 
             cell = row.createCell(5);
-            cell.setCellValue(soNganHang.getLai() - soNganHang.getSoTienGui());
+            cell.setCellValue(soNganHang.getChuKy());
 
             cell = row.createCell(6);
+            cell.setCellValue(soNganHang.getLai() - soNganHang.getSoTienGui());
+
+            cell = row.createCell(7);
             cell.setCellValue(soNganHang.getLai());
         }
 
@@ -263,15 +272,40 @@ public class Excel {
         createOutputFile(workbook, excelFilePath);
     }
 
-    public static Workbook getWorkbook(String excelFilePath) {
+    public static Workbook checkWorkBook(String excelFilePath) throws IOException {
+        File file = new File(excelFilePath);
+        Workbook workbook = null;
+        InputStream inputStream = new FileInputStream(new File(excelFilePath));
+        
+        if (file.exists()) {
+            if (excelFilePath.endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(excelFilePath);
+            } else if (excelFilePath.endsWith("xls")) {
+                workbook = new HSSFWorkbook(inputStream);
+            } else {
+                throw new IllegalArgumentException("The specified file is not Excel file");
+            }
+        } else {
+            if (excelFilePath.endsWith("xlsx")) {
+                workbook = new XSSFWorkbook();
+            } else if (excelFilePath.endsWith("xls")) {
+                workbook = new HSSFWorkbook();
+            } else {
+                throw new IllegalArgumentException("The specified file is not Excel file");
+            }
+        }
+
+        return workbook;
+    }
+
+    public Workbook getWorkbook(String excelFilePath) throws IOException {
+        File file = new File(excelFilePath);
         Workbook workbook = null;
 
-        if (excelFilePath.endsWith("xlsx")) {
-            workbook = new XSSFWorkbook();
-        } else if (excelFilePath.endsWith("xls")) {
-            workbook = new HSSFWorkbook();
+        if (file.exists()) {
+            workbook = readExcel(excelFilePath);
         } else {
-            throw new IllegalArgumentException("The specified file is not Excel file");
+            workbook = createExcel(excelFilePath);
         }
 
         return workbook;
@@ -352,9 +386,13 @@ public class Excel {
 
             cell = row.createCell(5);
             cell.setCellStyle(cellStyle);
-            cell.setCellValue("Tiền lãi");
+            cell.setCellValue("Chu kỳ lãi");
 
             cell = row.createCell(6);
+            cell.setCellStyle(cellStyle);
+            cell.setCellValue("Tiền lãi");
+
+            cell = row.createCell(7);
             cell.setCellStyle(cellStyle);
             cell.setCellValue("Tổng cộng");
         }
