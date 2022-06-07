@@ -14,7 +14,7 @@ public class NganHang {
     public int getLais(Date today) {
         int ans = 0;
         for (int i = 0; i < khoanGui.size(); ++i) {
-            if (khoanGui.get(i).getNgayTra().isEqual(today)) {
+                if (khoanGui.get(i).getNgayTra().isEqual(today)) {
                 ans += khoanGui.get(i).getLai();
             }
         }
