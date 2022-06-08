@@ -34,7 +34,7 @@ public final class App {
         // Create excel file
         String excelPath = "./OutPut.xlsx";
         Excel excel = new Excel();
-        Workbook book = excel.getWorkbook(excelPath);
+        Workbook book = excel.createExcel(excelPath);
 
         clrscr();
 
@@ -210,7 +210,7 @@ public final class App {
         int laiNoChung = 0;
         for (int i = 0; i < khoanNos.size(); ++i) {
             if ((khoanNos.get(i).linhHoat) && (khoanNos.get(i).toiThoiDiem(today))) {
-                
+
                 khoanNos.get(i).inputLai(scanner);
             }
             laiNoChung += khoanNos.get(i).getLai(today);

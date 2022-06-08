@@ -3,15 +3,10 @@ package nhom2;
 import java.util.Vector;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.ImReal;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -22,7 +17,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
@@ -36,39 +30,34 @@ public class Excel {
 
     }
 
-    public Workbook readExcel(String excelFilePath) throws IOException {
-        Workbook workbook = checkWorkBook(excelFilePath);
-
-        Sheet sheet = workbook.getSheetAt(0);
-        this.rowLuong = sheet.getLastRowNum();
-
-        sheet = workbook.getSheetAt(1);
-        this.rowChiPhi = sheet.getLastRowNum();
-
-        sheet = workbook.getSheetAt(2);
-        this.rowNganHang = sheet.getLastRowNum();
-
-        sheet = workbook.getSheetAt(3);
-        this.rowNoHangThang = sheet.getLastRowNum();
-
-        sheet = workbook.getSheetAt(4);
-        this.rowNoHangThang = sheet.getLastRowNum();
-
-        createOutputFile(workbook, excelFilePath);
-
-        return workbook;
-    }
-
     public Workbook createExcel(String excelFilePath) throws IOException {
         // Get Workbook
         Workbook workbook = checkWorkBook(excelFilePath);
 
-        // Create sheet
-        Sheet sheetLuong = workbook.createSheet("Luong"); // Create sheet with sheet name
-        Sheet sheetChiphi = workbook.createSheet("Chi Phi"); // Create sheet with sheet name
-        Sheet sheetNganHang = workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
-        Sheet sheetNoLinhHoat = workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
-        Sheet sheetCacKhoanNo = workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
+        File file = new File(excelFilePath);
+
+        if (file.exists()) {
+            Sheet sheet = workbook.getSheetAt(0);
+            this.rowLuong = sheet.getLastRowNum();
+
+            sheet = workbook.getSheetAt(1);
+            this.rowChiPhi = sheet.getLastRowNum();
+
+            sheet = workbook.getSheetAt(2);
+            this.rowNganHang = sheet.getLastRowNum();
+
+            sheet = workbook.getSheetAt(3);
+            this.rowNoHangThang = sheet.getLastRowNum();
+
+            sheet = workbook.getSheetAt(4);
+            this.rowNoHangThang = sheet.getLastRowNum();
+        } else {
+            Sheet sheetLuong = workbook.createSheet("Luong"); // Create sheet with sheet name
+            Sheet sheetChiphi = workbook.createSheet("Chi Phi"); // Create sheet with sheet name
+            Sheet sheetNganHang = workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
+            Sheet sheetNoLinhHoat = workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
+            Sheet sheetCacKhoanNo = workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
+        }
 
         createOutputFile(workbook, excelFilePath);
 
@@ -275,13 +264,12 @@ public class Excel {
     public static Workbook checkWorkBook(String excelFilePath) throws IOException {
         File file = new File(excelFilePath);
         Workbook workbook = null;
-        InputStream inputStream = new FileInputStream(new File(excelFilePath));
-        
+
         if (file.exists()) {
             if (excelFilePath.endsWith("xlsx")) {
                 workbook = new XSSFWorkbook(excelFilePath);
             } else if (excelFilePath.endsWith("xls")) {
-                workbook = new HSSFWorkbook(inputStream);
+                throw new IllegalArgumentException("The xls file is not supported");
             } else {
                 throw new IllegalArgumentException("The specified file is not Excel file");
             }
@@ -289,23 +277,10 @@ public class Excel {
             if (excelFilePath.endsWith("xlsx")) {
                 workbook = new XSSFWorkbook();
             } else if (excelFilePath.endsWith("xls")) {
-                workbook = new HSSFWorkbook();
+                throw new IllegalArgumentException("The xls file is not supported");
             } else {
                 throw new IllegalArgumentException("The specified file is not Excel file");
             }
-        }
-
-        return workbook;
-    }
-
-    public Workbook getWorkbook(String excelFilePath) throws IOException {
-        File file = new File(excelFilePath);
-        Workbook workbook = null;
-
-        if (file.exists()) {
-            workbook = readExcel(excelFilePath);
-        } else {
-            workbook = createExcel(excelFilePath);
         }
 
         return workbook;
