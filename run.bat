@@ -1,1 +1,1 @@
-java -jar managemnt.jar
+java -jar management.jar
