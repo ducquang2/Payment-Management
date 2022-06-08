@@ -51,22 +51,30 @@ public final class App {
             chiPhi = excel.getChiPhi(book);
             nganHang = excel.getNganHang(book);
             khoanNos = excel.getKhoanNo(book);
+            check[0] = true;
+            check[1] = true;
+            check[2] = false;
+            check[3] = excel.isGuiNganHang(book, today);
+            check[4] = excel.isTraLaiNo(book, today);
+            check[5] = true;
         } else {
             book = excel.createExcel(excelPath);
             clrscr();
             inputKhoanNo(scanner, khoanNos, today);
-            for (int i = 0; i < khoanNos.size(); ++i) {
-                lastDate = Date.max(lastDate, khoanNos.get(i).getNgayTraNo());
-            }
 
             excel.writeExcelCacKhoanNo(book, excelPath, khoanNos, today);
+            today.plusMonths(1);
+        }
+
+        for (int i = 0; i < khoanNos.size(); ++i) {
+            lastDate = Date.max(lastDate, khoanNos.get(i).getNgayTraNo());
         }
 
         Menu menu = new Menu();
 
         boolean isExit = false;
         // System.out.println(excel.getDateFromFile(book).toString());
-        today.plusMonths(1);
+
         do {
             if (!check[5]) {
                 if (!traTienNo(thuNhap, khoanNos, today)) {

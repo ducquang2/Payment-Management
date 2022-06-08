@@ -69,7 +69,7 @@ public class Excel {
         workbook.createSheet("Luong"); // Create sheet with sheet name
         workbook.createSheet("Chi Phi"); // Create sheet with sheet name
         workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
-        workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
+        workbook.createSheet(" Lai No Hang Thang"); // Create sheet with sheet name
         workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
 
         createOutputFile(workbook, excelFilePath);
@@ -599,4 +599,29 @@ public class Excel {
         return ans;
     }
 
+    public boolean isTraLaiNo(Workbook wb, Date today) {
+        Sheet sheet = wb.getSheet("Lai No Hang Thang");
+
+        List<String> data = getDataRow(sheet, sheet.getLastRowNum());
+
+        Date lastDate = new Date();
+        String[] parts = data.get(0).split("/");
+        lastDate.setMonth(Integer.parseInt(parts[0]));
+        lastDate.setYear(Integer.parseInt(parts[1]));
+
+        return lastDate.isEqual(today);
+    }
+
+    public boolean isGuiNganHang(Workbook wb, Date today) {
+        Sheet sheet = wb.getSheet("Ngan hang");
+
+        List<String> data = getDataRow(sheet, sheet.getLastRowNum());
+
+        Date lastDate = new Date();
+        String[] parts = data.get(1).split("/");
+        lastDate.setMonth(Integer.parseInt(parts[0]));
+        lastDate.setYear(Integer.parseInt(parts[1]));
+
+        return lastDate.isEqual(today);
+    }
 }
