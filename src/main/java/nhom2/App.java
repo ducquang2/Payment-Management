@@ -2,9 +2,7 @@ package nhom2;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -40,7 +38,6 @@ public final class App {
         // Workbook book = excel.createExcel(excelPath);
         File file = new File(excelPath);
         Workbook book = null;
-        List<String> data = new ArrayList<>();
 
         if (file.exists()) {
             book = excel.readExcel(excelPath);
