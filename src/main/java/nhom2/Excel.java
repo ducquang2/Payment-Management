@@ -1,10 +1,15 @@
 package nhom2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,7 +22,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.drawingml.x2006.main.impl.STTextVertOverflowTypeImpl;
 
 public class Excel {
     public int rowLuong = 0;
@@ -26,38 +33,44 @@ public class Excel {
     public int rowNoHangThang = 0;
     public int rowCacKhoanNo = 0;
 
+    // protected Workbook wb = null;
+
     public Excel() {
 
+    }
+
+    public Workbook readExcel(String excelFilePath) throws IOException {
+        Workbook workbook = checkWorkBook(excelFilePath);
+
+        Sheet sheet = workbook.getSheetAt(0);
+        this.rowLuong = sheet.getLastRowNum() + 1;
+
+        sheet = workbook.getSheetAt(1);
+        this.rowChiPhi = sheet.getLastRowNum() + 1;
+
+        sheet = workbook.getSheetAt(2);
+        this.rowNganHang = sheet.getLastRowNum() + 1;
+
+        sheet = workbook.getSheetAt(3);
+        this.rowNoHangThang = sheet.getLastRowNum() + 1;
+
+        sheet = workbook.getSheetAt(4);
+        this.rowNoHangThang = sheet.getLastRowNum() + 1;
+
+        // createOutputFile(workbook, excelFilePath);
+
+        return workbook;
     }
 
     public Workbook createExcel(String excelFilePath) throws IOException {
         // Get Workbook
         Workbook workbook = checkWorkBook(excelFilePath);
 
-        File file = new File(excelFilePath);
-
-        if (file.exists()) {
-            Sheet sheet = workbook.getSheetAt(0);
-            this.rowLuong = sheet.getLastRowNum();
-
-            sheet = workbook.getSheetAt(1);
-            this.rowChiPhi = sheet.getLastRowNum();
-
-            sheet = workbook.getSheetAt(2);
-            this.rowNganHang = sheet.getLastRowNum();
-
-            sheet = workbook.getSheetAt(3);
-            this.rowNoHangThang = sheet.getLastRowNum();
-
-            sheet = workbook.getSheetAt(4);
-            this.rowNoHangThang = sheet.getLastRowNum();
-        } else {
-            Sheet sheetLuong = workbook.createSheet("Luong"); // Create sheet with sheet name
-            Sheet sheetChiphi = workbook.createSheet("Chi Phi"); // Create sheet with sheet name
-            Sheet sheetNganHang = workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
-            Sheet sheetNoLinhHoat = workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
-            Sheet sheetCacKhoanNo = workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
-        }
+        workbook.createSheet("Luong"); // Create sheet with sheet name
+        workbook.createSheet("Chi Phi"); // Create sheet with sheet name
+        workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
+        workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
+        workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
 
         createOutputFile(workbook, excelFilePath);
 
@@ -263,11 +276,14 @@ public class Excel {
 
     public static Workbook checkWorkBook(String excelFilePath) throws IOException {
         File file = new File(excelFilePath);
+
         Workbook workbook = null;
 
         if (file.exists()) {
             if (excelFilePath.endsWith("xlsx")) {
-                workbook = new XSSFWorkbook(excelFilePath);
+                InputStream inputStream = new FileInputStream(new File(excelFilePath));
+                workbook = new XSSFWorkbook(inputStream);
+
             } else if (excelFilePath.endsWith("xls")) {
                 throw new IllegalArgumentException("The xls file is not supported");
             } else {
@@ -440,4 +456,147 @@ public class Excel {
             workbook.write(os);
         }
     }
+
+    public List<String> getDataRow(Sheet sheet, int rowNum) {
+
+        Row row = sheet.getRow(rowNum);
+
+        List<String> arr = new ArrayList<>();
+        for (int i = 0; i < row.getLastCellNum(); i++) {
+            Cell cell = row.getCell(i);
+            switch (cell.getCellType()) {
+                case STRING:
+                    arr.add(cell.getStringCellValue());
+                    break;
+                case NUMERIC:
+                    DecimalFormat decimalFormat = new DecimalFormat("#.0#");
+                    arr.add("0" + decimalFormat.format(cell.getNumericCellValue()));
+                    break;
+                case BLANK:
+                    arr.add("");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return arr;
+    }
+
+    public Date getToday(Workbook wb) {
+        Sheet sheet = wb.getSheet("Luong");
+
+        List<String> data = getDataRow(sheet, sheet.getLastRowNum());
+
+        String[] parts = data.get(0).split("/");
+
+        Date ans = new Date(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+
+        return ans;
+    }
+
+    public ThuNhap getThuNhap(Workbook wb) {
+        Sheet sheet = wb.getSheet("Luong");
+
+        List<String> data = getDataRow(sheet, sheet.getLastRowNum());
+
+        int luongVoChong = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+
+        int luongChung = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+
+        int luongChungDu = Integer.parseInt(data.get(3).substring(0, data.get(3).length() - 2));
+
+        int thuNhapTraNo = Integer.parseInt(data.get(4).substring(0, data.get(4).length() - 2));
+
+        ThuNhap ans = new ThuNhap(luongVoChong, luongChung, luongChungDu, thuNhapTraNo);
+
+        return ans;
+    }
+
+    public ChiPhi getChiPhi(Workbook wb) {
+        Sheet sheet = wb.getSheet("Chi phi");
+
+        List<String> data = getDataRow(sheet, sheet.getLastRowNum());
+
+        // Tien dien
+        int tienDien = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+        // Tien dien
+        int tienNuoc = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+        // Tien dien
+        int tienAnUong = Integer.parseInt(data.get(3).substring(0, data.get(3).length() - 2));
+        // Tien dien
+        int tienChiPhiKhac = Integer.parseInt(data.get(4).substring(0, data.get(4).length() - 2));
+
+        ChiPhi ans = new ChiPhi(tienDien, tienNuoc, tienAnUong, tienChiPhiKhac);
+
+        return ans;
+    }
+
+    public NganHang getNganHang(Workbook wb) {
+        Sheet sheet = wb.getSheet("Ngan hang");
+
+        int countRow = sheet.getLastRowNum();
+        NganHang ans = new NganHang();
+
+        for (int i = 1; i <= countRow; i++) {
+            List<String> data = getDataRow(sheet, i);
+            // Thang gui
+            Date thangGui = new Date();
+            String[] parts = data.get(1).split("/");
+            thangGui.setMonth(Integer.parseInt(parts[0]));
+            thangGui.setYear(Integer.parseInt(parts[1]));
+            // So tien
+            int soTien = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+            // Phan tram lai
+
+            double phanTramLai = Double.parseDouble(data.get(3));
+            // Thang tra
+            Date thangTra = new Date();
+            parts = data.get(4).split("/");
+            thangTra.month = Integer.parseInt(parts[0]);
+            thangTra.year = Integer.parseInt(parts[1]);
+            // Chu ky lai
+            int chuKy = Integer.parseInt(data.get(5).substring(0, data.get(5).length() - 2));
+            SoNganHang temp = new SoNganHang(soTien, thangGui, thangTra, phanTramLai, chuKy);
+            ans.addI(temp);
+        }
+        return ans;
+    }
+
+    public Vector<KhoanNo> getKhoanNo(Workbook wb) {
+        Sheet sheet = wb.getSheet("Cac Khoan No");
+
+        int countRow = sheet.getLastRowNum();
+        Vector<KhoanNo> ans = new Vector<KhoanNo>();
+
+        for (int i = 1; i <= countRow; i++) {
+            List<String> data = getDataRow(sheet, i);
+            // So tien no
+            int soTien = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+
+            // Han tra
+            Date hanTra = new Date();
+            String[] parts = data.get(2).split("/");
+            hanTra.setMonth(Integer.parseInt(parts[0]));
+            hanTra.setYear(Integer.parseInt(parts[1]));
+
+            // Chu ky
+            int chuKy = Integer.parseInt(data.get(3).substring(0, data.get(3).length() - 2));
+
+            // Linh hoat
+            boolean linhHoat = data.get(4) == "Cố định" ? false : true;
+
+            // Phan tram lai
+            double phanTramLai = 0;
+            if (data.size() == 6) {
+                if (data.get(5) != "") {
+                    phanTramLai = Double.parseDouble(data.get(5));
+                }
+            }
+
+            KhoanNo temp = new KhoanNo(soTien, chuKy, linhHoat, new Date(5, 2022), hanTra, phanTramLai);
+            ans.add(temp);
+        }
+        return ans;
+    }
+
 }

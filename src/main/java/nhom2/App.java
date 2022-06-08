@@ -1,7 +1,10 @@
 package nhom2;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -34,21 +37,35 @@ public final class App {
         // Create excel file
         String excelPath = "./OutPut.xlsx";
         Excel excel = new Excel();
-        Workbook book = excel.createExcel(excelPath);
+        // Workbook book = excel.createExcel(excelPath);
+        File file = new File(excelPath);
+        Workbook book = null;
+        List<String> data = new ArrayList<>();
 
-        clrscr();
+        if (file.exists()) {
+            book = excel.readExcel(excelPath);
+            // data = excel.getDataRow(book.getSheetAt(0),
+            // book.getSheetAt(0).getLastRowNum());
+            today = excel.getToday(book);
+            thuNhap = excel.getThuNhap(book);
+            chiPhi = excel.getChiPhi(book);
+            nganHang = excel.getNganHang(book);
+            khoanNos = excel.getKhoanNo(book);
+        } else {
+            book = excel.createExcel(excelPath);
+            clrscr();
+            inputKhoanNo(scanner, khoanNos, today);
+            for (int i = 0; i < khoanNos.size(); ++i) {
+                lastDate = Date.max(lastDate, khoanNos.get(i).getNgayTraNo());
+            }
 
-        inputKhoanNo(scanner, khoanNos, today);
-
-        for (int i = 0; i < khoanNos.size(); ++i) {
-            lastDate = Date.max(lastDate, khoanNos.get(i).getNgayTraNo());
+            excel.writeExcelCacKhoanNo(book, excelPath, khoanNos, today);
         }
-
-        excel.writeExcelCacKhoanNo(book, excelPath, khoanNos, today);
 
         Menu menu = new Menu();
 
         boolean isExit = false;
+        // System.out.println(excel.getDateFromFile(book).toString());
         today.plusMonths(1);
         do {
             if (!check[5]) {
@@ -123,13 +140,13 @@ public final class App {
                         System.exit(0);
                     }
                     check[4] = true;
+                    excel.writeExcelLaiNoHangThang(book, excelPath, khoanNos, today);
                     break;
                 case 5:
                     if (check[2] && check[4]) {
                         if (!(check[1] || check[3])) {
                             System.out.println("Ban chua nhan luong.");
                         } else {
-                            excel.writeExcelLaiNoHangThang(book, excelPath, khoanNos, today);
                             today.plusMonths(1);
                             for (int i = 0; i < 6; ++i) {
                                 check[i] = false;
@@ -156,6 +173,7 @@ public final class App {
                     break;
                 case 9:
                     isExit = true;
+                    book.close();
                     break;
                 default:
                     break;

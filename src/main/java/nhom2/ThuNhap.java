@@ -18,6 +18,13 @@ public class ThuNhap { // thuNhap
         this.luongChung = luongChung;
     }
 
+    public ThuNhap(int luongVoChong, int luongChung, int luongChungDu, int thuNhapTraNo) {
+        this.luongVoChong = luongVoChong;
+        this.luongChung = luongChung;
+        this.luongChungDu = luongChungDu;
+        this.thuNhapTraNo = thuNhapTraNo;
+    }
+
     public ThuNhap(ThuNhap luong) {
         this.luongVoChong = luong.luongVoChong;
         this.luongChung = luong.luongChung;
@@ -65,8 +72,7 @@ public class ThuNhap { // thuNhap
         this.thuNhapTraNo = thuNhapTraNo;
     }
 
-    public void input(Scanner scanner)
-    {
+    public void input(Scanner scanner) {
         int temp = 0;
         System.out.println("Nhap luong: ");
         System.out.print("Nhap luong chong: ");

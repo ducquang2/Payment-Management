@@ -15,11 +15,13 @@ public class KhoanNo implements Comparable<KhoanNo> {
 
     }
 
-    public KhoanNo(int soTienNo, int chuKy, boolean linhHoat, Date ngayTraNo) {
+    public KhoanNo(int soTienNo, int chuKy, boolean linhHoat, Date ngayMuonNo, Date ngayTraNo, double phanTramLai) {
         this.soTienNo = soTienNo;
         this.chuKy = chuKy;
         this.linhHoat = linhHoat;
+        this.ngayMuonNo = ngayMuonNo;
         this.ngayTraNo = ngayTraNo;
+        this.phanTramLai = phanTramLai;
         // if (linhHoat) {
         // phanTramLai = 6.6;
         // }
@@ -112,6 +114,7 @@ public class KhoanNo implements Comparable<KhoanNo> {
     }
 
     public boolean toiThoiDiem(Date today) {
-        return ((ngayTraNo.diffMonths(today) % chuKy == 0) && ((ngayTraNo.isGreater(today)) || ngayTraNo.isEqual(today)));
+        return ((ngayTraNo.diffMonths(today) % chuKy == 0)
+                && ((ngayTraNo.isGreater(today)) || ngayTraNo.isEqual(today)));
     }
 }
