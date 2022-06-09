@@ -3,7 +3,7 @@ package nhom2;
 import java.util.Scanner;
 
 public class KhoanNo implements Comparable<KhoanNo> {
-    protected int soTienNo;
+    protected long soTienNo;
     protected Date ngayMuonNo = new Date();
     protected Date ngayTraNo = new Date();
     protected int chuKy;
@@ -15,7 +15,7 @@ public class KhoanNo implements Comparable<KhoanNo> {
 
     }
 
-    public KhoanNo(int soTienNo, int chuKy, boolean linhHoat, Date ngayMuonNo, Date ngayTraNo, double phanTramLai) {
+    public KhoanNo(long soTienNo, int chuKy, boolean linhHoat, Date ngayMuonNo, Date ngayTraNo, double phanTramLai) {
         this.soTienNo = soTienNo;
         this.chuKy = chuKy;
         this.linhHoat = linhHoat;
@@ -38,14 +38,14 @@ public class KhoanNo implements Comparable<KhoanNo> {
         }
     }
 
-    public int getLai(Date date) {
+    public long getLai(Date date) {
         if (!toiThoiDiem(date)) {
             return 0;
         }
-        return (int) (soTienNo / 100 * phanTramLai);
+        return (long) (soTienNo / 100 * phanTramLai);
     }
 
-    public int getTienNo() {
+    public long getTienNo() {
         return soTienNo;
     }
 
@@ -76,7 +76,7 @@ public class KhoanNo implements Comparable<KhoanNo> {
     public void input(Scanner scanner, Date today) {
         System.out.println("Nhap no: ");
         System.out.print("Nhap so tien no: ");
-        this.soTienNo = scanner.nextInt();
+        this.soTienNo = scanner.nextLong();
         this.ngayMuonNo = today;
         System.out.println("Nhap ngay tra no: ");
         this.ngayTraNo.input(scanner);

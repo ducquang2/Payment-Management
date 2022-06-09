@@ -39,21 +39,21 @@ public class Menu {
 
         // Luong
         System.out.println("Luong: ");
-        System.out.println("    + Vo chong: " + Integer.toString(thuNhap.getLuongVoChong()) +        
-        " | Chung: " + Integer.toString(thuNhap.getLuongChung()) + 
-        " | Du: " + Integer.toString(thuNhap.getLuongChungDu()) + 
-        " | Tien de tra no: " + Integer.toString(thuNhap.getThuNhapTraNo()));
+        System.out.println("    + Vo chong: " + Long.toString(thuNhap.getLuongVoChong()) +        
+        " | Chung: " + Long.toString(thuNhap.getLuongChung()) + 
+        " | Du: " + Long.toString(thuNhap.getLuongChungDu()) + 
+        " | Tien de tra no: " + Long.toString(thuNhap.getThuNhapTraNo()));
 
         // Chi phi
         System.out.println("Chi phi: ");
-        System.out.println("    + Dien: " + Integer.toString(chiPhi.getDien()) + 
-        " | Nuoc: " + Integer.toString(chiPhi.getNuoc()) + 
-        " | An uong: " + Integer.toString(chiPhi.getAnUong()) + 
-        " | Khac: " + Integer.toString(chiPhi.getChiPhiKhac()));
+        System.out.println("    + Dien: " + Long.toString(chiPhi.getDien()) + 
+        " | Nuoc: " + Long.toString(chiPhi.getNuoc()) + 
+        " | An uong: " + Long.toString(chiPhi.getAnUong()) + 
+        " | Khac: " + Long.toString(chiPhi.getChiPhiKhac()));
 
         // Ngan hang
         System.out.println("Ngan hang: ");
-        System.out.println("   + Lai chung: " + Integer.toString(nganHang.getLais(today)));
+        System.out.println("   + Lai chung: " + Long.toString(nganHang.getLais(today)));
 
         // Khoan no
         int noChung = 0;
@@ -61,6 +61,6 @@ public class Menu {
             noChung += khoanNos.get(i).getLai(today);
         }
         System.out.println("No du kien thang nay:");
-        System.out.println("   + No chung: " + Integer.toString(noChung));
+        System.out.println("   + No chung: " + Long.toString(noChung));
     }
 }

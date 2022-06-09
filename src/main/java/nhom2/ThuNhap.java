@@ -3,22 +3,22 @@ package nhom2;
 import java.util.Scanner;
 
 public class ThuNhap { // thuNhap
-    private int luongVoChong = 0;
-    private int luongChung = 0;
-    private int luongChungDu = 0;
-    private int thuNhapTraNo = 0;
+    private long luongVoChong = 0;
+    private long luongChung = 0;
+    private long luongChungDu = 0;
+    private long thuNhapTraNo = 0;
 
     // Constructor
     public ThuNhap() {
 
     }
 
-    public ThuNhap(int luongVoChong, int luongChung) {
+    public ThuNhap(long luongVoChong, long luongChung) {
         this.luongVoChong = luongVoChong;
         this.luongChung = luongChung;
     }
 
-    public ThuNhap(int luongVoChong, int luongChung, int luongChungDu, int thuNhapTraNo) {
+    public ThuNhap(long luongVoChong, long luongChung, long luongChungDu, long thuNhapTraNo) {
         this.luongVoChong = luongVoChong;
         this.luongChung = luongChung;
         this.luongChungDu = luongChungDu;
@@ -31,57 +31,57 @@ public class ThuNhap { // thuNhap
     }
 
     // Other method
-    public int getLuongVoChong() {
+    public long getLuongVoChong() {
         return luongVoChong;
     }
 
-    public int getLuongChung() {
+    public long getLuongChung() {
         return luongChung;
     }
 
-    public int getLuongChungDu() {
+    public long getLuongChungDu() {
         return luongChungDu;
     }
 
-    public int getThuNhapTraNo() {
+    public long getThuNhapTraNo() {
         return thuNhapTraNo;
     }
 
-    public int getLuong() {
+    public long getLuong() {
         return luongVoChong + luongChung;
     }
 
-    public void setLuongVoChong(int luongVoChong) {
+    public void setLuongVoChong(long luongVoChong) {
         this.luongVoChong = luongVoChong;
     }
 
-    public void setLuong(int luongVoChong, int luongChung) { // Using for input
+    public void setLuong(long luongVoChong, long luongChung) { // Using for input
         this.luongVoChong = luongVoChong;
         this.luongChung = luongChung;
     }
 
-    public void setLuongChungDu(int luongChungDu) {
+    public void setLuongChungDu(long luongChungDu) {
         this.luongChungDu = luongChungDu;
     }
 
-    public void setLuongChung(int luongChung) {
+    public void setLuongChung(long luongChung) {
         this.luongChung = luongChung;
     }
 
-    public void setThuNhapTraNo(int thuNhapTraNo) {
+    public void setThuNhapTraNo(long thuNhapTraNo) {
         this.thuNhapTraNo = thuNhapTraNo;
     }
 
     public void input(Scanner scanner) {
-        int temp = 0;
+        long temp = 0;
         System.out.println("Nhap luong: ");
         System.out.print("Nhap luong chong: ");
         scanner.nextLine();
-        temp += scanner.nextInt();
+        temp += scanner.nextLong();
         System.out.print("Nhap luong vo: ");
-        temp += scanner.nextInt();
+        temp += scanner.nextLong();
         System.out.print("Nhap luong chung: ");
-        luongChung = scanner.nextInt();
+        luongChung = scanner.nextLong();
         this.setLuong(temp, luongChung);
     }
 }

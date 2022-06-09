@@ -497,13 +497,13 @@ public class Excel {
 
         List<String> data = getDataRow(sheet, sheet.getLastRowNum());
 
-        int luongVoChong = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+        long luongVoChong = Long.parseLong(data.get(1).substring(0, data.get(1).length() - 2));
 
-        int luongChung = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+        long luongChung = Long.parseLong(data.get(2).substring(0, data.get(2).length() - 2));
 
-        int luongChungDu = Integer.parseInt(data.get(3).substring(0, data.get(3).length() - 2));
+        long luongChungDu = Long.parseLong(data.get(3).substring(0, data.get(3).length() - 2));
 
-        int thuNhapTraNo = Integer.parseInt(data.get(4).substring(0, data.get(4).length() - 2));
+        long thuNhapTraNo = Long.parseLong(data.get(4).substring(0, data.get(4).length() - 2));
 
         ThuNhap ans = new ThuNhap(luongVoChong, luongChung, luongChungDu, thuNhapTraNo);
 
@@ -516,13 +516,13 @@ public class Excel {
         List<String> data = getDataRow(sheet, sheet.getLastRowNum());
 
         // Tien dien
-        int tienDien = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+        long tienDien = Long.parseLong(data.get(1).substring(0, data.get(1).length() - 2));
         // Tien dien
-        int tienNuoc = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+        long tienNuoc = Long.parseLong(data.get(2).substring(0, data.get(2).length() - 2));
         // Tien dien
-        int tienAnUong = Integer.parseInt(data.get(3).substring(0, data.get(3).length() - 2));
+        long tienAnUong = Long.parseLong(data.get(3).substring(0, data.get(3).length() - 2));
         // Tien dien
-        int tienChiPhiKhac = Integer.parseInt(data.get(4).substring(0, data.get(4).length() - 2));
+        long tienChiPhiKhac = Long.parseLong(data.get(4).substring(0, data.get(4).length() - 2));
 
         ChiPhi ans = new ChiPhi(tienDien, tienNuoc, tienAnUong, tienChiPhiKhac);
 
@@ -543,7 +543,7 @@ public class Excel {
             thangGui.setMonth(Integer.parseInt(parts[0]));
             thangGui.setYear(Integer.parseInt(parts[1]));
             // So tien
-            int soTien = Integer.parseInt(data.get(2).substring(0, data.get(2).length() - 2));
+            long soTien = Long.parseLong(data.get(2).substring(0, data.get(2).length() - 2));
             // Phan tram lai
 
             double phanTramLai = Double.parseDouble(data.get(3));
@@ -569,7 +569,7 @@ public class Excel {
         for (int i = 1; i <= countRow; i++) {
             List<String> data = getDataRow(sheet, i);
             // So tien no
-            int soTien = Integer.parseInt(data.get(1).substring(0, data.get(1).length() - 2));
+            long soTien = Long.parseLong(data.get(1).substring(0, data.get(1).length() - 2));
 
             // Han tra
             Date hanTra = new Date();

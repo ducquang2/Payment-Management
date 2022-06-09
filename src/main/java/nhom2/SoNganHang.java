@@ -3,7 +3,7 @@ package nhom2;
 import java.util.Scanner;
 
 public class SoNganHang {
-    protected int soTienGui = 0;
+    protected long soTienGui = 0;
     protected Date ngayGui = new Date();
     protected Date ngayTra = new Date();
     protected double phanTramLai = 0;
@@ -13,7 +13,7 @@ public class SoNganHang {
 
     }
 
-    public SoNganHang(int soTienGui, Date ngayGui, Date ngayTra, double phanTramLai, int chuKy) {
+    public SoNganHang(long soTienGui, Date ngayGui, Date ngayTra, double phanTramLai, int chuKy) {
         this.soTienGui = soTienGui;
         this.ngayGui = ngayGui;
         this.ngayTra = ngayTra;
@@ -29,11 +29,11 @@ public class SoNganHang {
         this.chuKy = SoMoi.chuKy;
     }
 
-    public int getSoTienGui() {
+    public long getSoTienGui() {
         return this.soTienGui;
     }
 
-    public void setSoTienGui(int soTienGui) {
+    public void setSoTienGui(long soTienGui) {
         this.soTienGui = soTienGui;
     }
 
@@ -73,11 +73,11 @@ public class SoNganHang {
     //     return ((ngayTra.diffMonths(today) % chuKy == 0) && ((ngayTra.isGreater(today)) || ngayTra.isEqual(today)));
     // }
 
-    public int getLai() {
+    public long getLai() {
         // if (!toiThoiDiem(today)) {
         //     return 0;
         // }
-        return (int) (Math.pow(phanTramLai, ngayTra.diffMonths(ngayGui) / chuKy) + 1 * this.soTienGui);
+        return (long) ((Math.pow(phanTramLai, ngayTra.diffMonths(ngayGui) / chuKy) + 1) * this.soTienGui);
         // return (int) (this.getSoTienGui() / 100 * this.getPhanTramLai());
     }
 
@@ -86,9 +86,9 @@ public class SoNganHang {
         this.ngayTra = new Date(ngayGui);
         System.out.println("Nhap so tien muon gui tiet kiem: ");
         boolean loop = true;
-        int temp = 0;
+        long temp = 0;
         do {
-            temp = scanner.nextInt();
+            temp = scanner.nextLong();
             if (temp <= thuNhap.getLuongVoChong() && temp > 50000) {
                 loop = false;
             } else {

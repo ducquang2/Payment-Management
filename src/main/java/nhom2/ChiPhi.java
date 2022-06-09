@@ -3,67 +3,67 @@ package nhom2;
 import java.util.Scanner;
 
 public class ChiPhi {
-    private int dien = 0;
-    private int nuoc = 0;
-    private int anuong = 0;
-    private int chiphikhac = 0;
+    private long dien = 0;
+    private long nuoc = 0;
+    private long anuong = 0;
+    private long chiphikhac = 0;
 
     public ChiPhi() {
 
     }
 
-    public ChiPhi(int tienDien, int tienNuoc, int tienAnUong, int tienChiPhiKhac) {
+    public ChiPhi(long tienDien, long tienNuoc, long tienAnUong, long tienChiPhiKhac) {
         this.dien = tienDien;
         this.nuoc = tienNuoc;
         this.anuong = tienAnUong;
         this.chiphikhac = tienChiPhiKhac;
     }
 
-    public void setDien(int dien) {
+    public void setDien(long dien) {
         this.dien = dien;
     }
 
-    public void setNuoc(int nuoc) {
+    public void setNuoc(long nuoc) {
         this.nuoc = nuoc;
     }
 
-    public void setAnUong(int anuong) {
+    public void setAnUong(long anuong) {
         this.anuong = anuong;
     }
 
-    public void setChiPhiKhac(int chiphikhac) {
+    public void setChiPhiKhac(long chiphikhac) {
         this.chiphikhac = chiphikhac;
     }
 
-    public int getNuoc() {
+    public long getNuoc() {
         return this.nuoc;
     }
 
-    public int getDien() {
+    public long getDien() {
         return this.dien;
     }
 
-    public int getAnUong() {
+    public long getAnUong() {
         return this.anuong;
     }
 
-    public int getChiPhiKhac() {
+    public long getChiPhiKhac() {
         return this.chiphikhac;
     }
 
-    public int getChiPhi() {
-        return (int) (getDien() + getNuoc() + getChiPhiKhac() + getAnUong());
+    public long getChiPhi() {
+        return (long) (getDien() + getNuoc() + getChiPhiKhac() + getAnUong());
     }
 
     public void input(Scanner scanner) {
         System.out.println("Nhap chi phi:");
         System.out.print("Nhap tien dien: ");
-        this.dien = scanner.nextInt();
+        this.dien = scanner.nextLong();
         System.out.print("Nhap tien nuoc: ");
-        this.nuoc = scanner.nextInt();
+        this.nuoc = scanner.nextLong();
         System.out.print("Nhap tien an uong: ");
-        this.anuong = scanner.nextInt();
+        this.anuong = scanner.nextLong();
         System.out.print("Nhap tien chi phi khac: ");
-        this.chiphikhac = scanner.nextInt();
+        this.chiphikhac = scanner.nextLong();
     }
 }

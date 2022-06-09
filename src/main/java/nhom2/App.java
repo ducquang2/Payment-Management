@@ -208,23 +208,23 @@ public final class App {
     }
 
     public static boolean traTienChiPhi(ThuNhap thuNhap, ChiPhi chiphi) {
-        int chiPhi = chiphi.getChiPhi();
-        int temp;
+        long chiPhi = chiphi.getChiPhi();
+        long temp;
 
-        temp = Integer.valueOf(thuNhap.getLuongChungDu());
+        temp = Long.valueOf(thuNhap.getLuongChungDu());
         thuNhap.setLuongChungDu(Math.max(thuNhap.getLuongChungDu() - chiPhi, 0));
         chiPhi = Math.max(chiPhi - temp, 0);
 
-        temp = Integer.valueOf(thuNhap.getLuongChung());
+        temp = Long.valueOf(thuNhap.getLuongChung());
         thuNhap.setLuongChung(Math.max(thuNhap.getLuongChung() - chiPhi, 0));
         chiPhi = Math.max(chiPhi - temp, 0);
 
-        temp = Integer.valueOf(thuNhap.getLuongVoChong());
+        temp = Long.valueOf(thuNhap.getLuongVoChong());
         thuNhap.setLuongVoChong(Math.max(thuNhap.getLuongVoChong() - chiPhi, 0));
         chiPhi = Math.max(chiPhi - temp, 0);
 
         if (chiPhi != 0) {
-            System.out.println("So tien am: " + Integer.toString(-chiPhi));
+            System.out.println("So tien am: " + Long.toString(-chiPhi));
             return false;
         }
 
@@ -234,7 +234,7 @@ public final class App {
     public static boolean traTienLai(ThuNhap thuNhap, NganHang nganHang, Vector<KhoanNo> khoanNos, Date today,
             Scanner scanner) {
         // int laiNoChung = khoanNo1.getLai(today) + khoanno2.getLai(today);
-        int laiNoChung = 0;
+        long laiNoChung = 0;
         for (int i = 0; i < khoanNos.size(); ++i) {
             if ((khoanNos.get(i).linhHoat) && (khoanNos.get(i).toiThoiDiem(today))) {
 
@@ -246,22 +246,22 @@ public final class App {
 
         thuNhap.setLuongChungDu(thuNhap.getLuongChungDu());
 
-        int temp;
+        long temp;
 
-        temp = Integer.valueOf(thuNhap.getLuongChungDu());
+        temp = Long.valueOf(thuNhap.getLuongChungDu());
         thuNhap.setLuongChungDu(Math.max(thuNhap.getLuongChungDu() - laiNoChung, 0));
         laiNoChung = Math.max(laiNoChung - temp, 0);
 
-        temp = Integer.valueOf(thuNhap.getLuongChung());
+        temp = Long.valueOf(thuNhap.getLuongChung());
         thuNhap.setLuongChung(Math.max(thuNhap.getLuongChung() - laiNoChung, 0));
         laiNoChung = Math.max(laiNoChung - temp, 0);
 
-        temp = Integer.valueOf(thuNhap.getLuongVoChong());
+        temp = Long.valueOf(thuNhap.getLuongVoChong());
         thuNhap.setLuongVoChong(Math.max(thuNhap.getLuongVoChong() - laiNoChung, 0));
         laiNoChung = Math.max(laiNoChung - temp, 0);
 
         if (laiNoChung != 0) {
-            System.out.println("So tien am: " + Integer.toString(-laiNoChung));
+            System.out.println("So tien am: " + Long.toString(-laiNoChung));
             return false;
         }
 
@@ -289,31 +289,31 @@ public final class App {
     public static boolean traTienNo(ThuNhap thuNhap, Vector<KhoanNo> khoanNos, Date today) {
         for (int i = 0; i < khoanNos.size(); ++i) {
             if (khoanNos.get(i).getNgayTraNo().isEqual(today)) {
-                int tienNo = khoanNos.get(i).getTienNo();
-                int temp;
+                long tienNo = khoanNos.get(i).getTienNo();
+                long temp;
 
                 // Thu nhap tra no
-                temp = Integer.valueOf(thuNhap.getThuNhapTraNo());
+                temp = Long.valueOf(thuNhap.getThuNhapTraNo());
                 thuNhap.setThuNhapTraNo(Math.max(thuNhap.getThuNhapTraNo() - tienNo, 0));
                 tienNo = Math.max(tienNo - temp, 0);
 
                 // Luong chung du: LuongChungDu
-                temp = Integer.valueOf(thuNhap.getLuongChungDu());
+                temp = Long.valueOf(thuNhap.getLuongChungDu());
                 thuNhap.setLuongChungDu(Math.max(thuNhap.getLuongChungDu() - tienNo, 0));
                 tienNo = Math.max(tienNo - temp, 0);
 
                 // Luong vo chong: LuongVoChong
-                temp = Integer.valueOf(thuNhap.getLuongVoChong());
+                temp = Long.valueOf(thuNhap.getLuongVoChong());
                 thuNhap.setLuongVoChong(Math.max(thuNhap.getLuongVoChong() - tienNo, 0));
                 tienNo = Math.max(tienNo - temp, 0);
 
                 // Luong chung: LuongChung
-                temp = Integer.valueOf(thuNhap.getLuongChung());
+                temp = Long.valueOf(thuNhap.getLuongChung());
                 thuNhap.setLuongChung(Math.max(thuNhap.getLuongChung() - tienNo, 0));
                 tienNo = Math.max(tienNo - temp, 0);
 
                 if (tienNo != 0) {
-                    System.out.println("So tien am: " + Integer.toString(-tienNo));
+                    System.out.println("So tien am: " + Long.toString(-tienNo));
                     return false;
                 } else {
                     // khoanNos.remove(i);
@@ -328,7 +328,7 @@ public final class App {
     public static boolean duDoanNo(ThuNhap thuNhap, ChiPhi chiPhi, NganHang nganHang, Vector<KhoanNo> khoanNos,
             Date today) {
         // Lay tong thu nhap
-        int vao = thuNhap.getThuNhapTraNo();
+        long vao = thuNhap.getThuNhapTraNo();
         // Chot cho ngan hang
         int pivot = 0;
         if (nganHang.getKhoanGui().size() == 0) {
@@ -356,9 +356,9 @@ public final class App {
             } else {
                 temp = new Date(khoanNos.get(i).getNgayTraNo());
                 System.out.println("Khong the tra no");
-                System.out.println("Vo no khi tra khoan no thu " + Integer.toString(i + 1) + " vao thang "
-                        + Integer.toString(temp.getMonth())
-                        + "/" + Integer.toString(temp.getYear()));
+                System.out.println("Vo no khi tra khoan no thu " + Long.toString(i + 1) + " vao thang "
+                        + Long.toString(temp.getMonth())
+                        + "/" + Long.toString(temp.getYear()));
                 return false;
             }
         }
@@ -370,10 +370,10 @@ public final class App {
         System.out.println("Cac khoan no: ");
         for (int i = 0; i < khoanNos.size(); ++i) {
             KhoanNo khoanNo = khoanNos.get(i);
-            System.out.println(Integer.toString(i + 1) + ". Khoan no: "
-                    + Integer.toString(khoanNo.getTienNo()) + " | Thang tra: "
-                    + Integer.toString(khoanNo.getNgayTraNo().getMonth()) + "/"
-                    + Integer.toString(khoanNo.getNgayTraNo().getYear())
+            System.out.println(Long.toString(i + 1) + ". Khoan no: "
+                    + Long.toString(khoanNo.getTienNo()) + " | Thang tra: "
+                    + Long.toString(khoanNo.getNgayTraNo().getMonth()) + "/"
+                    + Long.toString(khoanNo.getNgayTraNo().getYear())
                     + (khoanNo.getDaTra() ? " | Da tra" : ""));
         }
     }
@@ -382,10 +382,10 @@ public final class App {
         System.out.println("Cac so ngan hang: ");
         for (int i = 0; i < nganHang.getKhoanGui().size(); ++i) {
             SoNganHang soNganHang = nganHang.getKhoanGui().get(i);
-            System.out.println(Integer.toString(i + 1) + ". So ngan hang: "
-                    + Integer.toString(soNganHang.getSoTienGui()) + " | Thang tra: "
-                    + Integer.toString(soNganHang.getNgayTra().getMonth()) + "/"
-                    + Integer.toString(soNganHang.getNgayTra().getYear()));
+            System.out.println(Long.toString(i + 1) + ". So ngan hang: "
+                    + Long.toString(soNganHang.getSoTienGui()) + " | Thang tra: "
+                    + Long.toString(soNganHang.getNgayTra().getMonth()) + "/"
+                    + Long.toString(soNganHang.getNgayTra().getYear()));
         }
     }
 
