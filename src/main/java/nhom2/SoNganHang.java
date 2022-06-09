@@ -77,7 +77,7 @@ public class SoNganHang {
         // if (!toiThoiDiem(today)) {
         //     return 0;
         // }
-        return (long) ((Math.pow(phanTramLai, ngayTra.diffMonths(ngayGui) / chuKy) + 1) * this.soTienGui);
+        return (long) ((Math.pow(phanTramLai, ngayTra.diffMonths(ngayGui) / chuKy) + 100) * this.soTienGui / 100);
         // return (int) (this.getSoTienGui() / 100 * this.getPhanTramLai());
     }
 
