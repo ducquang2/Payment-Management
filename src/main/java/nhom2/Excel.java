@@ -67,7 +67,7 @@ public class Excel {
         workbook.createSheet("Luong"); // Create sheet with sheet name
         workbook.createSheet("Chi Phi"); // Create sheet with sheet name
         workbook.createSheet("Ngan Hang"); // Create sheet with sheet name
-        workbook.createSheet(" Lai No Hang Thang"); // Create sheet with sheet name
+        workbook.createSheet("Lai No Hang Thang"); // Create sheet with sheet name
         workbook.createSheet("Cac Khoan No"); // Create sheet with sheet name
 
         createOutputFile(workbook, excelFilePath);

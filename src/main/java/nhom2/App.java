@@ -48,6 +48,10 @@ public final class App {
             chiPhi = excel.getChiPhi(book);
             nganHang = excel.getNganHang(book);
             khoanNos = excel.getKhoanNo(book);
+            Vector<SoNganHang> soNganHangs = nganHang.getKhoanGui();
+            if (soNganHangs.get(soNganHangs.size() - 1).getNgayGui().isEqual(today)) {
+                thuNhap.setLuongVoChong(thuNhap.getLuongVoChong() - soNganHangs.get(soNganHangs.size() - 1).getSoTienGui());
+            }
             check[0] = true;
             check[1] = true;
             check[2] = false;
