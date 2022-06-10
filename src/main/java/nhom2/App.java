@@ -61,6 +61,9 @@ public final class App {
         } else {
             book = excel.createExcel(excelPath);
             clrscr();
+            System.out.println("Nhap ngay hien tai: ");
+            today.input(scanner);
+            lastDate = new Date(today);
             inputKhoanNo(scanner, khoanNos, today);
 
             excel.writeExcelCacKhoanNo(book, excelPath, khoanNos, today);
