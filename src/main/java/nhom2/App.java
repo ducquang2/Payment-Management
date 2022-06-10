@@ -27,12 +27,11 @@ public final class App {
         ChiPhi chiPhi = new ChiPhi();
         NganHang nganHang = new NganHang();
         Date today = new Date(5, 2022);
-        //
         Vector<KhoanNo> khoanNos = new Vector<KhoanNo>();
         Boolean[] check = { false, false, false, false, false, false, false, false, false };
         Date lastDate = new Date(today);
 
-        // Create excel file
+        // Create excel file path
         // System.out.println("Nhap ten file: ");
         String fileName = "Output";
         // fileName = scanner.nextLine();
@@ -44,8 +43,6 @@ public final class App {
 
         if (file.exists()) {
             book = excel.readExcel(excelPath);
-            // data = excel.getDataRow(book.getSheetAt(0),
-            // book.getSheetAt(0).getLastRowNum());
             today = excel.getToday(book);
             thuNhap = excel.getThuNhap(book);
             chiPhi = excel.getChiPhi(book);
@@ -81,7 +78,6 @@ public final class App {
         Menu menu = new Menu();
 
         boolean isExit = false;
-        // System.out.println(excel.getDateFromFile(book).toString());
 
         do {
             if (!check[5]) {
