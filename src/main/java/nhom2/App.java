@@ -33,7 +33,10 @@ public final class App {
         Date lastDate = new Date(today);
 
         // Create excel file
-        String excelPath = "./OutPut.xlsx";
+        // System.out.println("Nhap ten file: ");
+        String fileName = "Output";
+        // fileName = scanner.nextLine();
+        String excelPath = "./" + fileName + ".xlsx"; // "./Output.xlsx";
         Excel excel = new Excel();
         // Workbook book = excel.createExcel(excelPath);
         File file = new File(excelPath);
@@ -50,7 +53,8 @@ public final class App {
             khoanNos = excel.getKhoanNo(book);
             Vector<SoNganHang> soNganHangs = nganHang.getKhoanGui();
             if (soNganHangs.get(soNganHangs.size() - 1).getNgayGui().isEqual(today)) {
-                thuNhap.setLuongVoChong(thuNhap.getLuongVoChong() - soNganHangs.get(soNganHangs.size() - 1).getSoTienGui());
+                thuNhap.setLuongVoChong(
+                        thuNhap.getLuongVoChong() - soNganHangs.get(soNganHangs.size() - 1).getSoTienGui());
             }
             check[0] = true;
             check[1] = true;
